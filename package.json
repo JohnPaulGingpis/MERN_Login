@@ -1,7 +1,7 @@
 {
   "name": "mern_login",
   "version": "1.0.0",
-  "description": "Login page with user registration and authentication. Created using the MERN Stack",
+  "description": "Login page with user registration and authentication. Created using the MERN Stack.",
   "main": "server.js",
   "scripts": {
     "client-install": "npm install --prefix client",

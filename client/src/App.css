@@ -1,0 +1,16 @@
+.App_CSS{
+  text-align: center;
+  margin: 0;
+  height: 0px;
+  width: 100%;
+}
+
+/* Home CSS */
+.Home_CSS{
+  background-color: lightgray;
+}
+
+.Home_CSS h1{
+  text-align: center;
+  font-size: 4em;
+}
