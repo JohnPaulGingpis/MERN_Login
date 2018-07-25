@@ -44,8 +44,7 @@ class SignUpModal extends React.Component {
   render() {
     return (
       <div>
-        <Button color="danger" onClick={this.toggle}>
-          {/* {this.props.buttonLabel} */}
+        <Button color="secondary" onClick={this.toggle}>
           Sign Up
         </Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
@@ -71,7 +70,7 @@ class SignUpModal extends React.Component {
                 />
                 <Label for="user">Email:</Label>
                 <Input
-                  type="text"
+                  type="email"
                   name="email"
                   id="email"
                   placeholder="Email"
@@ -79,7 +78,7 @@ class SignUpModal extends React.Component {
                 />
                 <Label for="user">Password:</Label>
                 <Input
-                  type="text"
+                  type="password"
                   name="password"
                   id="password"
                   placeholder="Password"

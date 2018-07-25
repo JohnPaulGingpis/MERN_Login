@@ -12,7 +12,8 @@
     margin-bottom: 0px;
     border-radius: 0px;
 }
-.container {
+
+.jumbotron .container {
     /* background:rgba(0,0,0,0.13); */
     background: rgb(34,34,34);
     background: rgba(34,34,34,0.75);
@@ -22,23 +23,18 @@
     text-align: center;
     margin-top: 150px;
 }
-h1 {
+
+.jumbotron h1 {
     color: white;
     padding-bottom: 1%;
 }
-input {
-    width: 60%;
+
+.jumbotron input {
+    width: 100%;
 }
-button{
-    width: 25%;
+
+.jumbotron button{
+    width: 60%;
     text-align: center;
     margin:0 auto;
-}
-.SignUpB {
-    text-decoration: underline;
-    color: white;
-    padding-top: 1%;
-}
-.SignUpB:hover {
-    cursor: pointer;
 }
