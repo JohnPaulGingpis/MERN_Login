@@ -12,7 +12,7 @@ import AppNavbar from './AppNavbar';
 import Login from './Login';
 import Page from './Page';
 
-class Home extends React.Component {
+export default class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -117,5 +117,3 @@ class Home extends React.Component {
         );
     }
 }
-
-export default Home;
