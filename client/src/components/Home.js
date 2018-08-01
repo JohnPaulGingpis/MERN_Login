@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'reactstrap';
 import { Switch, Route } from 'react-router-dom'
-import axios from 'axios';
+import { verifyUsers, logoutUsers } from '../actions/userActions';
 import {
     getFromStorage,
     setInStorage,
@@ -21,73 +21,29 @@ export default class Home extends React.Component {
         this.logout = this.logout.bind(this);
     }
 
-    componentDidMount() {
-        // console.log("Home!!!!!!!");
+    async componentDidMount() {
         var self = this;
         const obj = getFromStorage('react_login_app');
         if (obj && obj.token) {
             const { token } = obj;
-            // Verify token
-            // Should be moved into its own folder
-            console.log("Home Mount: " + token);
-            axios.get('/api/users/verify?token=' + token)
-                .then(function (res) {
-                    console.log(res);
-                    if (res.data.success) {
-                        self.setState({
-                            token
-                        });
-                    }
-                })
+            // console.log("Home Mount: " + token);
+            const tok = await verifyUsers(token);
+            if (tok.success) {
+                self.setState({
+                    token
+                });
+            }
         }
     }
 
-    logout = () => {
-        const obj = getFromStorage('react_login_app');
-        if (obj && obj.token) {
-            const { token } = obj;
-            // Verify token
-            console.log("Logout: " + token);
-            fetch('/api/users/logout?token=' + token)
-                .then(res => res.json())
-                .then(function (res) {
-                    console.log(res);
-                    if (res.success) {
-                        setInStorage('react_login_app', { token: '' });
-                        // this.setState({
-                        //     token: ''
-                        // });
-                        // self.setState({
-                        //     token: ''
-                        // });
-                    }
-                });
+    async logout() {
+        const res = await logoutUsers();
+        // console.log(res);
+        if (res.success) {
+            this.setState({
+                token: ''
+            });
         }
-        const objs = getFromStorage('react_login_app');
-        const { token } = objs;
-        this.setState({
-            token: ''
-        });
-
-        // var self = this;
-        // const obj = getFromStorage('react_login_app');
-        // if (obj && obj.token) {
-        //     const { token } = obj;
-        //     console.log(token);
-        //     axios
-        //         .get('/api/logout?token=' + token)
-        //         .then(function (res) {
-        //             console.log(res);
-        //             // if (json.success) {
-        //             //     this.setState({
-        //             //         token: ''
-        //             //     });
-        //             // }
-        //         })
-        //         .catch(function (error) {
-        //             console.log(error);
-        //         });
-        // }
     }
 
     render() {
@@ -95,7 +51,6 @@ export default class Home extends React.Component {
             token
         } = this.state;
 
-        // if (!token) {
         if (!token) {
             return (
                 <div className="App_CSS">

@@ -1,21 +1,29 @@
 import React from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input } from 'reactstrap';
-import { connect } from 'react-redux';
+
+// Actions
 import { addUser } from '../actions/userActions';
 
-class SignUpModal extends React.Component {
+export default class SignUpModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modal: false
+      modal: false,
+      signUpError: ''
     };
 
     this.toggle = this.toggle.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   toggle() {
+    this.state.first_name = '';
+    this.state.last_name = '';
+    this.state.email = '';
+    this.state.password = '';
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
+      signUpError: ''
     });
   }
 
@@ -23,25 +31,36 @@ class SignUpModal extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  onSubmit = e => {
-    e.preventDefault();
+  async onSubmit() {
 
     const newUser = {
-      // id: uuid(),
       first_name: this.state.first_name,
       last_name: this.state.last_name,
       email: this.state.email,
       password: this.state.password
     }
 
-    // Add user via addUser action
-    this.props.addUser(newUser);
-
-    // Close modal
-    this.toggle();
+    const res = await addUser(newUser);
+    // console.log(res);
+    if (res.success) {
+      this.setState({
+        signUpError: ''
+      });
+      // Close modal
+      this.toggle();
+    }
+    else {
+      this.setState({
+        signUpError: res.message
+      });
+    }
   }
 
   render() {
+    const {
+      signUpError
+    } = this.state;
+
     return (
       <div>
         <Button color="secondary" onClick={this.toggle}>
@@ -49,6 +68,11 @@ class SignUpModal extends React.Component {
         </Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Sign Up</ModalHeader>
+          {
+            (signUpError) ? (
+              <p>{signUpError}</p>
+            ) : (null)
+          }
           <ModalBody>
             <Form onSubmit={this.onSubmit}>
               <FormGroup>
@@ -84,12 +108,6 @@ class SignUpModal extends React.Component {
                   placeholder="Password"
                   onChange={this.onChange}
                 />
-                {/* <Button
-                  color="dark"
-                  style={{ marginTop: '2rem' }}
-                  block>
-                  Sign Up
-                </Button> */}
               </FormGroup>
             </Form>
           </ModalBody>
@@ -102,11 +120,3 @@ class SignUpModal extends React.Component {
     );
   }
 }
-
-const mapStateToProps = state => ({
-  user: state.user
-});
-
-export default connect(mapStateToProps, { addUser })(SignUpModal);
-
-// export default SignUpModal;

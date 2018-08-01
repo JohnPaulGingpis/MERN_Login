@@ -1,124 +1,96 @@
 import axios from 'axios';
-import { GET_USERS, ADD_USER, SIGNIN_USER, VERIFY_USERS, LOGOUT_USERS, DELETE_USER, USERS_LOADING } from './types';
 
 import {
     getFromStorage,
     setInStorage,
 } from '../utils/storage';
 
-export const getUsers = () => dispatch => {
-    dispatch(setUsersLoading);
-    axios
-        .get('/api/users')
-        .then(res =>
-            dispatch({
-                type: GET_USERS,
-                payload: res.data
-            })
-        )
-};
-
-export const addUser = (user) => dispatch => {
-    axios
-        .post('/api/users/signup', user)
-        .then(res => dispatch({
-            type: ADD_USER,
-            payload: res.data
-        })
-        )
-};
-
-// With middleware
-// export const signinUser = (user) => dispatch => {
-//     console.log("Sign in" + "\nEmail: " + user.email + "\nPassword: " + user.password);
-//     axios
-//         .post('/api/users/signin', user)
-//         .then(function (res) {
-//             console.log(res);
-//             if (res.data.success) {
-//                 setInStorage('react_login_app', { token: res.data.token });
-//             };
-//             dispatch({
-//                 type: SIGNIN_USER,
-//                 payload: res.data
-//             })
-//         })
-
-// };
-export function signinUser(user) {
-    console.log("Sign in" + "\nEmail: " + user.email + "\nPassword: " + user.password);
-    axios
-        .post('/api/users/signin', user)
+export async function verifyUsers(token) {
+    var data_success, data_error;
+    // console.log("Server Token: " + token)
+    await axios
+        .get('/api/users/verify?token=' + token)
         .then(function (res) {
-            console.log(res);
+            // console.log(res);
             if (res.data.success) {
-                setInStorage('react_login_app', { token: res.data.token });
+                setInStorage('react_login_app', { token: token });
+                // console.log("Server End: " + token);
+                data_success = res.data.success;
+                data_error = res.data.message;
             };
         })
-    // return new Promise(function (resolve) {
-    //     axios
-    //         .post('/api/users/signin', user)
-    //         .then(function (res) {
-    //             console.log(res);
-    //             if (res.data.success) {
-    //                 setInStorage('react_login_app', { token: res.data.token });
-    //             };
-    //             // The data from the request is available in a .then block
-    //             // We return the result using resolve.
-    //             resolve(res);
-    //         });
-    // });
+    const data = {
+        success: data_success,
+        message: data_error
+    }
+    // console.log(data);
+    return data;
+}
 
-};
+export async function signinUser(user) {
+    var data_success, data_token, data_error;
+    // console.log("Sign in" + "\nEmail: " + user.email + "\nPassword: " + user.password);
+    await axios
+        .post('/api/users/signin', user)
+        .then(function (res) {
+            // console.log(res);
+            if (res.data.success) {
+                setInStorage('react_login_app', { token: res.data.token });
+                data_success = res.data.success;
+                data_token = res.data.token;
+                data_error = res.data.message;
+            }
+            else {
+                data_success = res.data.success;
+                data_error = res.data.message;
+            }
+        })
+    const data = {
+        success: data_success,
+        token: data_token,
+        message: data_error
+    }
+    // console.log(data);
+    return data;
+}
 
-// export const verifyUsers = (token) => dispatch => {
-//     // dispatch(setUsersLoading);
-//     console.log("server")
-//     console.log(token);
-//     axios
-//         .get('/api/verify?token=' + token)
-//         .then(res =>
-//             dispatch({
-//                 type: VERIFY_USERS,
-//                 payload: res.data
-//             })
-//         )
-// };
+export async function addUser(newUser) {
+    var data_success, data_error;
+    await axios
+        .post('/api/users/signup', newUser)
+        .then(function (res) {
+            // console.log(res);
+            data_success = res.data.success;
+            data_error = res.data.message;
+        })
+    const data = {
+        success: data_success,
+        message: data_error
+    }
+    // console.log(data);
+    return data;
+}
 
-export function verifyUsers(token) {
-    // dispatch(setUsersLoading);
-    console.log("server")
-    console.log(token);
-    axios
-        .get('/api/verify?token=' + token)
-    // .then(res =>
-    // )
-};
-
-export const logoutUsers = (token) => dispatch => {
-    dispatch(setUsersLoading);
-    axios
-        .get('/api/logout?token=' + token)
-        .then(res =>
-            dispatch({
-                type: LOGOUT_USERS,
-                payload: res.data
-            })
-        )
-};
-
-export const deleteUser = (id) => dispatch => {
-    axios
-        .delete(`/api/users/${id}`).then(res =>
-            dispatch({
-                type: DELETE_USER,
-                payload: id
-            })
-        )
-};
-
-export const setUsersLoading = () => {
-    return {
-        type: USERS_LOADING
-    };
-};
+export async function logoutUsers() {
+    const obj = getFromStorage('react_login_app');
+    const { token } = obj;
+    var data_success, data_error;
+    // console.log("Server Token: " + token)
+    await axios
+        .get('/api/users/logout?token=' + token)
+        .then(function (res) {
+            // console.log(res);
+            if (res.data.success) {
+                // console.log("Server End: " + token);
+                setInStorage('react_login_app', { token: '' });
+                data_success = res.data.success;
+                data_error = res.data.message;
+            };
+        })
+    const data = {
+        success: data_success,
+        message: data_error
+    }
+    // console.log(data);
+    return data;
+}

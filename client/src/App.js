@@ -1,20 +1,15 @@
 import React, { Component } from 'react';
-// import { Switch, Route } from 'react-router-dom'
-import axios from 'axios';
+import { verifyUsers } from './actions/userActions';
 import {
-  getFromStorage,
-  // setInStorage,
+  getFromStorage
 } from './utils/storage';
 
 // Components
-// import AppNavbar from './components/AppNavbar';
 import Home from './components/Home';
 import Login from './components/Login';
 
 // CSS
 import './App.css';
-
-
 
 export default class App extends Component {
   constructor(props) {
@@ -23,35 +18,32 @@ export default class App extends Component {
       isLoading: true,
       token: ''
     };
+
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     var self = this;
     const obj = getFromStorage('react_login_app');
     if (obj && obj.token) {
       const { token } = obj;
-      // Verify token
-      // Should be moved into its own folder
-      console.log("Mount: " + token);
-      axios.get('/api/users/verify?token=' + token)
-        .then(function (res) {
-          console.log(res);
-          if (res.data.success) {
-            self.setState({
-              token,
-              isLoading: false
-            });
-          }
-          else {
-            self.setState({
-              isLoading: false
-            });
-          }
-        })
+      // console.log("Mount: " + token);
+      const tok = await verifyUsers(token);
+      if (tok.success) {
+        self.setState({
+          token,
+          isLoading: false
+        });
+      }
+      else {
+        self.setState({
+          token: '',
+          isLoading: false
+        });
+      }
     }
     else {
       self.setState({
-        isLoading: false,
+        isLoading: false
       });
     }
   }
@@ -70,11 +62,9 @@ export default class App extends Component {
     }
     if (!token) {
       return (
-        // <Provider store={store}>
-          <div className="App_CSS">
-            <Login />
-          </div>
-        // </Provider>
+        <div className="App_CSS">
+          <Login />
+        </div>
       );
     }
 
@@ -82,7 +72,6 @@ export default class App extends Component {
 
       <div className="App_CSS">
         <Home />
-        {/* <Login /> */}
       </div>
     );
   }

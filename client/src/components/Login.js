@@ -1,15 +1,8 @@
 import React from 'react';
-import { Provider } from 'react-redux';
-import store from '../store';
 import { Container, Row, Col, Button } from 'reactstrap';
 import { Form, FormGroup, Input } from 'reactstrap';
-import axios from 'axios';
-import {
-    getFromStorage,
-    setInStorage,
-} from '../utils/storage';
 
-import { connect } from 'react-redux';
+// Actions
 import { signinUser } from '../actions/userActions';
 
 // Components
@@ -19,7 +12,7 @@ import Home from './Home';
 // CSS
 import './Login.css';
 
-class Login extends React.Component {
+export default class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -28,62 +21,32 @@ class Login extends React.Component {
             token: ''
         };
 
-        this.toggle = this.toggle.bind(this);
-    }
-
-    componentDidMount() {
-        // console.log("Login!!!!!!!");
-    }
-
-    toggle() {
-        this.setState({
-            modal: !this.state.modal
-        });
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
     onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
     }
 
-    onSubmit = e => {
-        e.preventDefault();
-
+    async onSubmit() {
         const loginUser = {
             email: this.state.login_email,
             password: this.state.login_password
         }
 
-        // console.log("send");
-        // const obj = signinUser(loginUser);
-        var self = this;
-        // const obj = getFromStorage('react_login_app');
-        // const { token } = obj;
-        axios
-            .post('/api/users/signin', loginUser)
-            .then(function (res) {
-                // console.log(res);
-                if (res.data.success) {
-                    setInStorage('react_login_app', { token: res.data.token });
-                    self.setState({
-                        signInError: res.data.message,
-                        token: res.data.token
-                    });
-                }
-                // console.log(token);
-                else {
-                    self.setState({
-                        signInError: res.data.message
-                    });
-                }
+        const res = await signinUser(loginUser);
+        console.log(res);
+        if (res.success) {
+            this.setState({
+                signInError: res.message,
+                token: res.token
             });
-
-        // console.log("end");
-
-        // Add user via signinUser action
-        // this.props.signinUser(loginUser);
-
-        // Close modal
-        this.toggle();
+        }
+        else {
+            this.setState({
+                signInError: res.message
+            });
+        }
     }
 
     render() {
@@ -91,13 +54,12 @@ class Login extends React.Component {
             signInError,
             token
         } = this.state;
-        // console.log("Main: " + token);
+
         if (!token) {
             return (
                 <div className="jumbotron">
                     <Container>
                         <h1>Login</h1>
-                        {/* <LoginForm /> */}
                         <Form>
                             <FormGroup>
                                 <Input
@@ -129,9 +91,7 @@ class Login extends React.Component {
                         </Row>
                         <Row>
                             <Col>
-                                <Provider store={store}>
-                                    <SignUpModal />
-                                </Provider>
+                                <SignUpModal />
                             </Col>
                             <Col>
                                 <Button color="primary" onClick={this.onSubmit}>Login</Button>
@@ -149,11 +109,3 @@ class Login extends React.Component {
         );
     }
 }
-
-// const mapStateToProps = state => ({
-//     user: state.user
-// });
-
-// export default connect(mapStateToProps, { signinUser })(Login);
-
-export default Login;

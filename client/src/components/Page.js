@@ -1,7 +1,7 @@
 import React from 'react';
 import { Badge } from 'reactstrap';
 
-const test1 = () => (
+const page = () => (
     <div>
         <h1>Hi</h1>
         <h1>Hi</h1>
@@ -18,4 +18,4 @@ const test1 = () => (
     </div>
 )
 
-export default test1;
+export default page;
