@@ -135,14 +135,14 @@ router.post('/signin', (req, res, next) => {
         if (users.length != 1) {
             return res.send({
                 success: false,
-                message: 'Error: Invalid'
+                message: 'Error: Invalid Email'
             });
         }
         const user = users[0];
         if (!user.validPassword(password)) {
             return res.send({
                 success: false,
-                message: 'Error: Invalid'
+                message: 'Error: Invalid Password'
             });
         }
         // Otherwise correct user

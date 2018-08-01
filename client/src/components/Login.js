@@ -24,6 +24,7 @@ class Login extends React.Component {
         super(props);
         this.state = {
             modal: false,
+            signInError: '',
             token: ''
         };
 
@@ -64,10 +65,16 @@ class Login extends React.Component {
                 if (res.data.success) {
                     setInStorage('react_login_app', { token: res.data.token });
                     self.setState({
+                        signInError: res.data.message,
                         token: res.data.token
                     });
-                };
+                }
                 // console.log(token);
+                else {
+                    self.setState({
+                        signInError: res.data.message
+                    });
+                }
             });
 
         // console.log("end");
@@ -81,6 +88,7 @@ class Login extends React.Component {
 
     render() {
         const {
+            signInError,
             token
         } = this.state;
         // console.log("Main: " + token);
@@ -110,6 +118,15 @@ class Login extends React.Component {
                                 />
                             </FormGroup>
                         </Form>
+                        <Row>
+                            <Col>
+                                {
+                                    (signInError) ? (
+                                        <p>{signInError}</p>
+                                    ) : (null)
+                                }
+                            </Col>
+                        </Row>
                         <Row>
                             <Col>
                                 <Provider store={store}>
