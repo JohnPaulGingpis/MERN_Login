@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
         .then(users => res.json(users))
 });
 
-// @route   GET api/Users
+// @route   GET api/Users/user/id
 // @desc    Get one Users
 // @access  Public`
 router.get('/user/:id', (req, res) => {
@@ -22,12 +22,15 @@ router.get('/user/:id', (req, res) => {
         .then(user => res.json(user))
 });
 
+// @route   GET api/Users/token/id
+// @desc    Get one UserSession
+// @access  Public`
 router.get('/token/:id', (req, res) => {
     UserSession.findById(req.params.id)
         .then(user => res.json(user))
 });
 
-// @route   POST api/signup
+// @route   POST api/Users/signup
 // @desc    Create An User
 // @access  Public
 router.post('/signup', (req, res, next) => {
@@ -110,8 +113,8 @@ router.post('/signup', (req, res, next) => {
     });
 });
 
-// @route   POST api/signin
-// @desc    Create An User
+// @route   POST api/Users/signin
+// @desc    Create An UserSession
 // @access  Public
 router.post('/signin', (req, res, next) => {
     const { body } = req;
@@ -178,15 +181,13 @@ router.post('/signin', (req, res, next) => {
     });
 });
 
-// @route   POST api/verify
-// @desc    Create An User
+// @route   POST api/Users/verify
+// @desc    Get all tokens
 // @access  Public
-// Doesn't Work
 router.get('/verify', (req, res, next) => {
     // Get the token
     const { query } = req;
     const { token } = query;
-    // ?token=test
     // Verify the token is one of a kind and it's not deleted.
     UserSession.find({
         _id: token,
@@ -215,8 +216,8 @@ router.get('/verify', (req, res, next) => {
     });
 });
 
-// @route   POST api/logout
-// @desc    Create An User
+// @route   POST api/Users/logout
+// @desc    Updates isDeledted in users
 // @access  Public
 router.get('/logout', (req, res, next) => {
     // Get the token
@@ -248,11 +249,20 @@ router.get('/logout', (req, res, next) => {
     );
 });
 
-// @route   DELETE api/Users:id
-// @desc    Delete An User
+// @route   DELETE api/Users/id
+// @desc    Delete A User
 // @access  Public
 router.delete('/:id', (req, res) => {
     User.findById(req.params.id)
+        .then(user => user.remove().then(() => res.json({ success: true })))
+        .catch(err => res.status(404).json({ success: false }));
+});
+
+// @route   DELETE api/Users/token/id
+// @desc    Delete A Token
+// @access  Public
+router.delete('/token/:id', (req, res) => {
+    UserSession.findById(req.params.id)
         .then(user => user.remove().then(() => res.json({ success: true })))
         .catch(err => res.status(404).json({ success: false }));
 });

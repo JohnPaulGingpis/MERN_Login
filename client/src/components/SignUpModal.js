@@ -68,11 +68,13 @@ export default class SignUpModal extends React.Component {
         </Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Sign Up</ModalHeader>
-          {
-            (signUpError) ? (
-              <p>{signUpError}</p>
-            ) : (null)
-          }
+          <div className="ErrMsg">
+            {
+              (signUpError) ? (
+                <p>{signUpError}</p>
+              ) : (null)
+            }
+          </div>
           <ModalBody>
             <Form onSubmit={this.onSubmit}>
               <FormGroup>

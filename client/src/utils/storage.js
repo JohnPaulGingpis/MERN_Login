@@ -1,3 +1,4 @@
+// Get Token From Storage
 export function getFromStorage(key) {
     if (!key) {
         return null;
@@ -13,6 +14,8 @@ export function getFromStorage(key) {
         return null;
     }
 }
+
+// Set's Token In Storage
 export function setInStorage(key, obj) {
     if (!key) {
         console.error('Error: Key is missing');

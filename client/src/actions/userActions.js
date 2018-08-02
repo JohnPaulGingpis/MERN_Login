@@ -5,6 +5,7 @@ import {
     setInStorage,
 } from '../utils/storage';
 
+// Get One User
 export async function getUser(token) {
     var userData;
     const id = await getToken(token);
@@ -19,6 +20,7 @@ export async function getUser(token) {
     return userData;
 }
 
+// Get One UserSchema
 export async function getToken(token) {
     var id;
     await axios
@@ -32,6 +34,7 @@ export async function getToken(token) {
     return id;
 }
 
+// Get All Users
 export async function getUsers() {
     const user = {};
     await axios
@@ -52,6 +55,7 @@ export async function getUsers() {
     return user;
 }
 
+// Verify's To Make Sure Token Isn't Deleted
 export async function verifyUsers(token) {
     var data_success, data_error;
     // console.log("Server Token: " + token)
@@ -74,6 +78,7 @@ export async function verifyUsers(token) {
     return data;
 }
 
+// Creates Token and UserSchema
 export async function signinUser(user) {
     var data_success, data_token, data_error;
     // console.log("Sign in" + "\nEmail: " + user.email + "\nPassword: " + user.password);
@@ -101,6 +106,7 @@ export async function signinUser(user) {
     return data;
 }
 
+// Add's a User
 export async function addUser(newUser) {
     var data_success, data_error;
     await axios
@@ -118,6 +124,7 @@ export async function addUser(newUser) {
     return data;
 }
 
+// Changes UserSchema To True For isDeleted
 export async function logoutUsers() {
     const obj = getFromStorage('react_login_app');
     const { token } = obj;
@@ -139,5 +146,18 @@ export async function logoutUsers() {
         message: data_error
     }
     // console.log(data);
+    deleteToken(token);
     return data;
+}
+
+// Deletes The Token
+export async function deleteToken(token) {
+    await axios
+        .delete('/api/users/token/' + token)
+}
+
+// Deletes The User
+export async function deleteUser(id) {
+    await axios
+        .delete('/api/users/' + id)
 }

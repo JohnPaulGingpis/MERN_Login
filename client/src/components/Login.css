@@ -43,3 +43,9 @@
     color: white;
     font-size: 1em;
 }
+
+.ErrMsg p{
+    padding-top: 3%;
+    padding-left: 3%;
+    color: red;
+}

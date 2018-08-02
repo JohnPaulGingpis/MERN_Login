@@ -1,11 +1,13 @@
 import React from 'react';
 import { Button } from 'reactstrap';
 import { Switch, Route } from 'react-router-dom'
-import { verifyUsers, logoutUsers, getUser, getUsers } from '../actions/userActions';
 import {
     getFromStorage,
     setInStorage,
 } from '../utils/storage';
+
+// Actions
+import { verifyUsers, logoutUsers, getUser, getUsers } from '../actions/userActions';
 
 // Components
 import AppNavbar from './AppNavbar';
