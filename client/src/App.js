@@ -5,8 +5,9 @@ import {
 } from './utils/storage';
 
 // Components
-import Home from './components/Home';
+import SwitchRoute from './components/SwitchRoute';
 import Login from './components/Login';
+import AppNavbar from './components/AppNavbar';
 
 // CSS
 import './App.css';
@@ -53,6 +54,7 @@ export default class App extends Component {
       isLoading,
       token
     } = this.state;
+
     if (isLoading) {
       return (
         <div className="App_CSS">
@@ -60,6 +62,7 @@ export default class App extends Component {
         </div>
       );
     }
+    
     if (!token) {
       return (
         <div className="App_CSS">
@@ -69,9 +72,9 @@ export default class App extends Component {
     }
 
     return (
-
       <div className="App_CSS">
-        <Home />
+        {/* <AppNavbar /> */}
+        <SwitchRoute />
       </div>
     );
   }

@@ -1,5 +1,5 @@
 .Home_CSS {
-  background-color: blue;
+  /* background-color: blue; */
   /* background-size: cover; */
   width: 100%;
   height: 100%;
@@ -25,4 +25,13 @@
 .Home_CSS .Profile h3 {
   padding-top: 1%;
   font-size: 1em;
+}
+
+NavbarBrand .navHeader {
+  color: white;
+  /* font-size: 1.2em; */
+}
+
+NavbarBrand .navHeader:hover {
+  color: gray;
 }

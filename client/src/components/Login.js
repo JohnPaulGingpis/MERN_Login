@@ -7,7 +7,8 @@ import { signinUser } from '../actions/userActions';
 
 // Components
 import SignUpModal from './SignUpModal';
-import Home from './Home';
+import App from '../App';
+import AppNavbar from './AppNavbar';
 
 // CSS
 import './Login.css';
@@ -106,7 +107,8 @@ export default class Login extends React.Component {
 
         return (
             <div className="App_CSS">
-                <Home />
+                {/* <AppNavbar /> */}
+                <App />
             </div>
         );
     }

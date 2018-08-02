@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import {
     Collapse,
     Navbar,
@@ -14,6 +14,10 @@ import {
     // DropdownItem,
     // Container
 } from 'reactstrap';
+
+// Components
+import SwitchRoute from './SwitchRoute';
+import Home from './Home';
 
 export default class AppNavbar extends Component {
     constructor(props) {
@@ -34,18 +38,21 @@ export default class AppNavbar extends Component {
         return (
             <div>
                 <Navbar color="dark" dark expand="md">
-                    {/* <Container> */}
-                        <NavbarBrand href="/home">Home</NavbarBrand>
-                        <NavbarToggler onClick={this.toggle} />
-                        <Collapse isOpen={this.state.isOpen} navbar>
-                            <Nav className="ml-auto" navbar>
-                                <NavItem>
-                                    <NavLink href="/page">Page</NavLink>
-                                </NavItem>
-                            </Nav>
-                        </Collapse>
-                    {/* </Container> */}
+                    <NavbarBrand tag={Link} to="/">
+                        Home
+                        {/* <NavLink className="navHeader" tag={Link} to="/">Home</NavLink> */}
+                    </NavbarBrand>
+                    <NavbarToggler onClick={this.toggle} />
+                    <Collapse isOpen={this.state.isOpen} navbar>
+                        <Nav className="ml-auto" navbar>
+                            <NavItem>
+                                <NavLink tag={Link} to="/Page">Page</NavLink>
+                            </NavItem>
+                        </Nav>
+                    </Collapse>
                 </Navbar>
+                {/* <SwitchRoute /> */}
+                {/* <Home /> */}
             </div>
         );
     }
