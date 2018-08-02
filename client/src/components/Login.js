@@ -57,47 +57,49 @@ export default class Login extends React.Component {
 
         if (!token) {
             return (
-                <div className="jumbotron">
-                    <Container>
-                        <h1>Login</h1>
-                        <Form>
-                            <FormGroup>
-                                <Input
-                                    type="email"
-                                    name="login_email"
-                                    id="login_email"
-                                    placeholder="Email"
-                                    onChange={this.onChange}
-                                />
-                            </FormGroup>
-                            <FormGroup>
-                                <Input
-                                    type="password"
-                                    name="login_password"
-                                    id="login_password"
-                                    placeholder="Password"
-                                    onChange={this.onChange}
-                                />
-                            </FormGroup>
-                        </Form>
-                        <Row>
-                            <Col>
-                                {
-                                    (signInError) ? (
-                                        <p>{signInError}</p>
-                                    ) : (null)
-                                }
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <SignUpModal />
-                            </Col>
-                            <Col>
-                                <Button color="primary" onClick={this.onSubmit}>Login</Button>
-                            </Col>
-                        </Row>
-                    </Container>
+                <div className="Login_CSS">
+                    <div className="jumbotron">
+                        <Container>
+                            <h1>Login</h1>
+                            <Form>
+                                <FormGroup>
+                                    <Input
+                                        type="email"
+                                        name="login_email"
+                                        id="login_email"
+                                        placeholder="Email"
+                                        onChange={this.onChange}
+                                    />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Input
+                                        type="password"
+                                        name="login_password"
+                                        id="login_password"
+                                        placeholder="Password"
+                                        onChange={this.onChange}
+                                    />
+                                </FormGroup>
+                            </Form>
+                            <Row>
+                                <Col>
+                                    {
+                                        (signInError) ? (
+                                            <p>{signInError}</p>
+                                        ) : (null)
+                                    }
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <SignUpModal />
+                                </Col>
+                                <Col>
+                                    <Button color="primary" onClick={this.onSubmit}>Login</Button>
+                                </Col>
+                            </Row>
+                        </Container>
+                    </div>
                 </div>
             );
         }

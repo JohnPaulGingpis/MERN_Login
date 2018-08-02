@@ -4,13 +4,9 @@
   height: 0px;
   width: 100%;
 }
-
-/* Home CSS */
-.Home_CSS{
-  background-color: lightgray;
-}
-
-.Home_CSS h1{
-  text-align: center;
-  font-size: 4em;
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #FFCC00;
 }

@@ -14,6 +14,19 @@ router.get('/', (req, res) => {
         .then(users => res.json(users))
 });
 
+// @route   GET api/Users
+// @desc    Get one Users
+// @access  Public`
+router.get('/user/:id', (req, res) => {
+    User.findById(req.params.id)
+        .then(user => res.json(user))
+});
+
+router.get('/token/:id', (req, res) => {
+    UserSession.findById(req.params.id)
+        .then(user => res.json(user))
+});
+
 // @route   POST api/signup
 // @desc    Create An User
 // @access  Public

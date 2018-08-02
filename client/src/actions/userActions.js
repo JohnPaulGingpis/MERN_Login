@@ -5,6 +5,53 @@ import {
     setInStorage,
 } from '../utils/storage';
 
+export async function getUser(token) {
+    var userData;
+    const id = await getToken(token);
+    // console.log("id: " + id);
+    await axios
+        .get('/api/users/user/' + id)
+        .then(function (res) {
+            // console.log(res.data);
+            userData = res.data;
+        });
+    // console.log(userData);
+    return userData;
+}
+
+export async function getToken(token) {
+    var id;
+    await axios
+        .get('/api/users/token/' + token)
+        .then(function (res) {
+            // console.log(res);
+            // console.log(res.data.userId);
+            id = res.data.userId;
+        })
+    // console.log(id);
+    return id;
+}
+
+export async function getUsers() {
+    const user = {};
+    await axios
+        .get('/api/users')
+        .then(function (res) {
+            // console.log(res);
+            // console.log(res.data);
+            for (var i = 0; i < res.data.length; i++) {
+                user[i] = res.data[i];
+                // console.log(user[i]);
+            }
+        })
+    console.log(user);
+    console.log(user.length);
+    for (var i = 0; i < user.length; i++) {
+        console.log(user[i]);
+    }
+    return user;
+}
+
 export async function verifyUsers(token) {
     var data_success, data_error;
     // console.log("Server Token: " + token)

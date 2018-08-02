@@ -1,4 +1,4 @@
-.jumbotron {
+.Login_CSS .jumbotron {
     background-image:
     linear-gradient(
       to bottom right, 
@@ -13,7 +13,7 @@
     border-radius: 0px;
 }
 
-.jumbotron .container {
+.Login_CSS .jumbotron .container {
     /* background:rgba(0,0,0,0.13); */
     background: rgb(34,34,34);
     background: rgba(34,34,34,0.75);
@@ -24,22 +24,22 @@
     margin-top: 150px;
 }
 
-.jumbotron h1 {
+.Login_CSS .jumbotron h1 {
     color: white;
     padding-bottom: 1%;
 }
 
-.jumbotron input {
+.Login_CSS .jumbotron input {
     width: 100%;
 }
 
-.jumbotron button{
+.Login_CSS .jumbotron button{
     width: 60%;
     text-align: center;
     margin:0 auto;
 }
 
-.jumbotron p {
+.Login_CSS .jumbotron p {
     color: white;
     font-size: 1em;
 }
