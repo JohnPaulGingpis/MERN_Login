@@ -23,7 +23,7 @@ Client side dependencies install without going into the client directory
 or if inside client directory
 ```npm install```
 
-## Running the tests
+## Running The Project
 
 To run both client and server
 ```npm run dev```
