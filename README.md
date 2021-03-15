@@ -48,10 +48,6 @@ or
 * [React](https://reactjs.org)
 * [Node.js](https://nodejs.org/en/)
 
-## Authors
-
-* **Hrag Ayvazian** - *MERN_Login* - [HragA](https://github.com/HragA)
-
 ## License
 
 This project is licensed under the MIT License.
